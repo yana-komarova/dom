@@ -1,46 +1,25 @@
 
-import './styles.css';
-import goblinImg from './img/goblin.png';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Goblin from './Goblin';
+import Player from './Player';
+import Game from './Game';
 
-const gridContainer = document.getElementById('gridContainer');
-const goblinImgUrl = goblinImg;
-let goblinPosition = { x: 0, y: 0 };
+const container = document.getElementById('container');
+const points = [
+  { x: 25, y: 25 },
+  { x: 50, y: 25 },
+  { x: 75, y: 25 },
+  { x: 25, y: 50 },
+  { x: 50, y: 50 },
+  { x: 75, y: 50 },
+  { x: 25, y: 75 },
+  { x: 50, y: 75 },
+  { x: 75, y: 75 },
+];
 
-function createRandomPosition() {
-  const x = Math.floor(Math.random() * 4);
-  const y = Math.floor(Math.random() * 4);
-  return { x, y };
-}
+const goblin = new Goblin(container, points);
+const player = new Player(container);
+const game = new Game(goblin, player);
 
-function moveGoblin() {
-  const newPosition = createRandomPosition();
-  while (newPosition.x === goblinPosition.x && newPosition.y === goblinPosition.y) {
-    newPosition = createRandomPosition();
-  }
-  const newCell = document.querySelector(`.grid-cell-${newPosition.x}-${newPosition.y}`);
-  const goblin = document.querySelector('.goblin');
-  goblinPosition = newPosition;
-  newCell.appendChild(goblin);
-}
-
-function initGame() {
-  for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 4; j++) {
-      const gridCell = document.createElement('div');
-      gridCell.classList.add('grid-cell', `grid-cell-${i}-${j}`);
-      gridContainer.appendChild(gridCell);
-    }
-  }
-
-  const goblin = document.createElement('img');
-  goblin.setAttribute('src', goblinImgUrl);
-  goblin.classList.add('goblin');
-
-  const initialPosition = createRandomPosition();
-  const initialCell = document.querySelector(`.grid-cell-${initialPosition.x}-${initialPosition.y}`);
-  initialCell.appendChild(goblin);
-
-  setInterval(moveGoblin, 1000);
-}
-
-initGame();
+game.start();

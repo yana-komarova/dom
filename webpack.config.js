@@ -6,12 +6,9 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
-    publicPath: '/dist/',
   },
   devServer: {
-    contentBase: path.join(__dirname, 'public'),
-    compress: true,
-    port: 9000,
+    contentBase: './dist',
   },
   module: {
     rules: [
@@ -20,19 +17,10 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
-        },
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.(png|jpe?g|gif)$/i,
-        use: [
-          {
-            loader: 'file-loader',
+          options: {
+            presets: ['@babel/preset-env'],
           },
-        ],
+        },
       },
     ],
   },

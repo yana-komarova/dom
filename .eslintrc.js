@@ -1,15 +1,7 @@
 module.exports = {
-    env: {
-      browser: true,
-      es2021: true,
-    },
-    extends: [
-      'eslint:recommended',
-    ],
-    parserOptions: {
-      ecmaVersion: 12,
-      sourceType: 'module',
-    },
-    rules: {
-    },
-  };
+  extends: 'airbnb',
+  plugins: ['import', 'react'],
+  rules: {
+    'import/no-unresolved': [2, { ignore: ['^\\.\\/.*\\.js$'] }],
+  },
+};

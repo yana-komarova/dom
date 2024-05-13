@@ -1,0 +1,24 @@
+image: Visual Studio 2022
+environment:
+  matrix:
+    - nodejs_version: '16'
+  APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2022
+  APPVEYOR_RETRY_FAILED_BUILDS: true
+  APPVEYOR_RETRY_MAX_ATTEMPTS: 2
+install:
+  - ps: Install-Product node $env:nodejs_version
+  - npm install
+build: off
+test_script:
+  - npm run test
+after_test:
+  - npm run build
+deploy:
+  - provider: GitHub
+    auth_token:
+      secure: EncryptedToken
+    artifact: /dist/bundle.js
+    draft: false
+    prerelease: false
+    on:
+      branch: master
